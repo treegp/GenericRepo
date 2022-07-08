@@ -16,5 +16,10 @@ namespace GenericRepo
         {
             InitializeComponent();
         }
+
+        private void InsertButton_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
