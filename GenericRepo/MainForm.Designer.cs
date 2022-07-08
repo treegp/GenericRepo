@@ -33,7 +33,7 @@
             this.UpdateButton = new System.Windows.Forms.Button();
             this.FindButton = new System.Windows.Forms.Button();
             this.FindAllButton = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
+            this.GetAllButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // InsertButton
@@ -83,22 +83,24 @@
             this.FindAllButton.TabIndex = 0;
             this.FindAllButton.Text = "FindAll";
             this.FindAllButton.UseVisualStyleBackColor = true;
+            this.FindAllButton.Click += new System.EventHandler(this.FindAllButton_Click);
             // 
-            // button6
+            // GetAllButton
             // 
-            this.button6.Location = new System.Drawing.Point(209, 316);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(75, 23);
-            this.button6.TabIndex = 0;
-            this.button6.Text = "button1";
-            this.button6.UseVisualStyleBackColor = true;
+            this.GetAllButton.Location = new System.Drawing.Point(209, 316);
+            this.GetAllButton.Name = "GetAllButton";
+            this.GetAllButton.Size = new System.Drawing.Size(75, 23);
+            this.GetAllButton.TabIndex = 0;
+            this.GetAllButton.Text = "GetAll";
+            this.GetAllButton.UseVisualStyleBackColor = true;
+            this.GetAllButton.Click += new System.EventHandler(this.GetAllButton_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(598, 450);
-            this.Controls.Add(this.button6);
+            this.Controls.Add(this.GetAllButton);
             this.Controls.Add(this.FindAllButton);
             this.Controls.Add(this.FindButton);
             this.Controls.Add(this.UpdateButton);
@@ -117,7 +119,7 @@
         private System.Windows.Forms.Button UpdateButton;
         private System.Windows.Forms.Button FindButton;
         private System.Windows.Forms.Button FindAllButton;
-        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button GetAllButton;
     }
 }
 

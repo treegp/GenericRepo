@@ -130,39 +130,29 @@ namespace ConnectToDB
 
 
 
-        string SelectByPrimaryKeys(params int[] keys)
+        List<TEntity> SelectByPrimaryKeys(string selectPart, bool hasWhere, params int[] keys)
         {
+            List<SqlParameter> parametersList = new List<SqlParameter>();
             List<string> conditionList = new List<string>();
 
-            int i = 1;
+            int i = 0;
             foreach (var spec in ColumnsSpecifics)
             {
                 if (!spec.PrimaryKey)
                     continue;
 
                 conditionList.Add("[" + spec.ColumnName + "] = @param" + i);
-
+                parametersList.Add(new SqlParameter("param" + i, keys[i]));
                 i++;
             }
 
-            string wherePart = "WHERE (" + string.Join(",", conditionList) + ")";
-            return wherePart;
-        }
+            string wherePart = "";
+            if (hasWhere)
+                wherePart = "WHERE (" + string.Join(",", conditionList) + ")";
+            
 
 
-        //SELECT * FROM [dbo].[****] WHERE [Id]=1 , ....
-        public TEntity Find(params int[] keys)
-        {
-            List<SqlParameter> parametersList = new List<SqlParameter>();
-
-            int i = 1;
-            foreach (var key in keys)
-                parametersList.Add(new SqlParameter("param" + i, key));
-
-            string selectPart = "SELECT TOP(1) * FROM [" + tblSchema + "].[" + tblName + "]";
-            string wherePart = SelectByPrimaryKeys(keys);
             string command = string.Join(" ", selectPart, wherePart);
-
 
             using (SqlConnection con = new SqlConnection(conStr))
             {
@@ -172,27 +162,47 @@ namespace ConnectToDB
                     com.Parameters.Add(p);
                 SqlDataReader reader = com.ExecuteReader();
 
-                TEntity entity = Activator.CreateInstance<TEntity>();
-                if (reader.Read())
+                List<TEntity> entities = new List<TEntity>();
+                while (reader.Read())
                 {
+                    TEntity entity = Activator.CreateInstance<TEntity>();
                     foreach (var spec in ColumnsSpecifics)
                     {
                         spec.ColumnType.SetValue(entity, reader[reader.GetOrdinal(spec.ColumnName)]);
                     }
+                    entities.Add(entity);
                 }
-
-                return entity;
-
-
+                return entities;
             }
-
-
-
-
-
         }
 
 
+        //SELECT * FROM [dbo].[****] WHERE [Id]=1 , ....
+        public TEntity Find(params int[] keys)
+        {
+            string selectPart = "SELECT TOP(1) * FROM [" + tblSchema + "].[" + tblName + "]";
+            return SelectByPrimaryKeys(selectPart, true, keys).FirstOrDefault();
+        }
+
+
+        public List<TEntity> FindAll(params int[] keys)
+        {
+            string selectPart = "SELECT * FROM [" + tblSchema + "].[" + tblName + "]";
+            return SelectByPrimaryKeys(selectPart, true, keys);
+        }
+
+
+        public List<TEntity> GetAll()
+        {
+            string selectPart = "SELECT * FROM [" + tblSchema + "].[" + tblName + "]";
+            return SelectByPrimaryKeys(selectPart, false, 0);
+        }
+
+        public List<TEntity> Top()
+        {
+            string selectPart = "SELECT TOP(1) * FROM [" + tblSchema + "].[" + tblName + "]";
+            return SelectByPrimaryKeys(selectPart, false, 0);
+        }
 
     }
 }

@@ -44,11 +44,35 @@ namespace GenericRepo
 
         private void FindButton_Click(object sender, EventArgs e)
         {
-            var products = new ConnectToDB.GenericRepository<ConnectToDB.EntitiyModels.Customers>("Data Source=.;Initial Catalog=ShopDb;Integrated Security=SSPI");
+            var products = new ConnectToDB.GenericRepository<ConnectToDB.EntitiyModels.Products>("Data Source=.;Initial Catalog=ShopDb;Integrated Security=SSPI");
 
             var i = products.Find(8);
             
-            if (i.FirstName != null)
+            if (i != null)
+                MessageBox.Show("Found");
+            else
+                MessageBox.Show("Entity not found");
+        }
+
+        private void FindAllButton_Click(object sender, EventArgs e)
+        {
+            var products = new ConnectToDB.GenericRepository<ConnectToDB.EntitiyModels.Products>("Data Source=.;Initial Catalog=ShopDb;Integrated Security=SSPI");
+
+            var i = products.FindAll(1);
+
+            if (i != null)
+                MessageBox.Show("Found");
+            else
+                MessageBox.Show("Entity not found");
+        }
+
+        private void GetAllButton_Click(object sender, EventArgs e)
+        {
+            var products = new ConnectToDB.GenericRepository<ConnectToDB.EntitiyModels.Products>("Data Source=.;Initial Catalog=ShopDb;Integrated Security=SSPI");
+
+            var i = products.GetAll();
+
+            if (i != null)
                 MessageBox.Show("Found");
             else
                 MessageBox.Show("Entity not found");
