@@ -43,8 +43,8 @@
   <ItemGroup>
     <Compile Include="Attributes.cs" />
     <Compile Include="ColumnSpecifics.cs" />
-    <Compile Include="EntityModels\Customers.cs" />
-    <Compile Include="EntityModels\Products.cs" />
+    <Compile Include="EntitiyModels\Customers.cs" />
+    <Compile Include="EntitiyModels\Products.cs" />
     <Compile Include="GenericRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

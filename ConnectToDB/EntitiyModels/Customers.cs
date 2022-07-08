@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConnectToDB.EntitiyModels
 {
-    [Table("Customers")]
+    [Table()]
     public class Customers
     {
         [Column(true,true,true)]

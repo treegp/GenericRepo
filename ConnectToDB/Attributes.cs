@@ -9,10 +9,10 @@ namespace ConnectToDB
         public string Name { get; set; }
 
 
-        public Table(string name, string schema = "dbo")
+        public Table(string schema = "dbo")
         {
             Schema = schema;
-            Name = name;
+            Name = typeof(Table).Name;
         }
     }
 

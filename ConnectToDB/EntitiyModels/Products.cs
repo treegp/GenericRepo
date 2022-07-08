@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ConnectToDB.EntitiyModels
 {
-    [Table("Products")]
+    [Table()]
     public class Products
     {
         [Column(true,true,true)]
