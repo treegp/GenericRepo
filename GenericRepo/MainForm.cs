@@ -77,5 +77,22 @@ namespace GenericRepo
             else
                 MessageBox.Show("Entity not found");
         }
+
+        private void UpdateButton_Click(object sender, EventArgs e)
+        {
+            var products = new ConnectToDB.GenericRepository<ConnectToDB.EntitiyModels.Products>("Data Source=.;Initial Catalog=ShopDb;Integrated Security=SSPI");
+
+            var product = products.Find(2);
+
+            product.Title = "Headphone";
+            product.Price = 850000;
+
+            var i =products.Update(product);
+
+            if (i != null)
+                MessageBox.Show("Found");
+            else
+                MessageBox.Show("Entity not found");
+        }
     }
 }

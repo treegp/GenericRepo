@@ -128,6 +128,49 @@ namespace ConnectToDB
         }
 
 
+        //UPDATE [dbo].[****] SET [Name]=@param1 , ... WHERE [Id]=1
+        public int Update(TEntity entity)
+        {
+            List<string> conditionList = new List<string>();
+            List<string> setList = new List<string>();
+            List<SqlParameter> parametersList = new List<SqlParameter>();
+
+            int i = 1;
+            foreach (var spec in ColumnsSpecifics)
+            {
+
+                if (spec.PrimaryKey)
+                    conditionList.Add("[" + spec.ColumnName + "] = @param" + i);
+                else if (!spec.Computed)
+                    setList.Add("[" + spec.ColumnName + "] = @param" + i);
+                else
+                    continue;
+
+                parametersList.Add(new SqlParameter("param" + i, spec.ColumnType.GetValue(entity)));
+                i++;
+            }
+
+
+            string updatePart = "UPDATE [" + tblSchema + "].[" + tblName + "]";
+            string setPart = "SET " + string.Join(",", setList) ;
+            string wherePart = "WHERE " + string.Join(",", conditionList) ;
+
+            string command = string.Join(" ", updatePart,setPart, wherePart);
+
+
+            using (SqlConnection con = new SqlConnection(conStr))
+            {
+                con.Open();
+                SqlCommand com = new SqlCommand(command, con);
+                foreach (SqlParameter p in parametersList)
+                    com.Parameters.Add(p);
+
+                return com.ExecuteNonQuery();
+            }
+
+
+
+        }
 
 
         List<TEntity> SelectByPrimaryKeys(string selectPart, bool hasWhere, params int[] keys)
@@ -149,7 +192,7 @@ namespace ConnectToDB
             string wherePart = "";
             if (hasWhere)
                 wherePart = "WHERE (" + string.Join(",", conditionList) + ")";
-            
+
 
 
             string command = string.Join(" ", selectPart, wherePart);
@@ -203,6 +246,8 @@ namespace ConnectToDB
             string selectPart = "SELECT TOP(1) * FROM [" + tblSchema + "].[" + tblName + "]";
             return SelectByPrimaryKeys(selectPart, false, 0);
         }
+
+
 
     }
 }
