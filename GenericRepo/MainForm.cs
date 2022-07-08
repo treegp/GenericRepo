@@ -15,13 +15,31 @@ namespace GenericRepo
         {
             var products = new ConnectToDB.GenericRepository<ConnectToDB.EntitiyModels.Products>("Data Source=.;Initial Catalog=ShopDb;Integrated Security=SSPI");
 
-            products.Insert(new ConnectToDB.EntitiyModels.Products
+            var i = products.Insert(new ConnectToDB.EntitiyModels.Products
             {
                 Title = "tst",
                 Price = 1000
             });
 
-            MessageBox.Show("Added");
+            if (i == 1)
+                MessageBox.Show("Added");
+            else
+                MessageBox.Show("Somthing wrong");
+        }
+
+        private void DeleteButton_Click(object sender, EventArgs e)
+        {
+            var products = new ConnectToDB.GenericRepository<ConnectToDB.EntitiyModels.Products>("Data Source=.;Initial Catalog=ShopDb;Integrated Security=SSPI");
+
+            var i = products.Delete(new ConnectToDB.EntitiyModels.Products
+            {
+                Id = 8
+            });
+
+            if (i == 1)
+                MessageBox.Show("Deleted");
+            else
+                MessageBox.Show("Entity not found");
         }
     }
 }

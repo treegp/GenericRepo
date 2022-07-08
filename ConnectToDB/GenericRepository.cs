@@ -87,8 +87,44 @@ namespace ConnectToDB
 
                 return com.ExecuteNonQuery();
             }
+
         }
 
+
+        //DELETE FROM [dbo].[****] WHERE [Id]=1 , ...
+        public int Delete(TEntity entity)
+        {
+            List<string> conditionList = new List<string>();
+            List<SqlParameter> parametersList = new List<SqlParameter>();
+
+            int i = 1;
+            foreach (var spec in ColumnsSpecifics)
+            {
+                if (!spec.PrimaryKey)
+                    continue;
+
+                conditionList.Add("[" + spec.ColumnName + "] = @param" + i);
+                parametersList.Add(new SqlParameter("param" + i, spec.ColumnType.GetValue(entity)));
+                i++;
+            }
+
+            string deletePart = "DELETE FROM [" + tblSchema + "].[" + tblName + "]";
+            string wherePart = "WHERE (" + string.Join(",", conditionList) + ")";
+
+            string command = string.Join(" ", deletePart, wherePart);
+
+
+            using (SqlConnection con = new SqlConnection(conStr))
+            {
+                con.Open();
+                SqlCommand com = new SqlCommand(command, con);
+                foreach (SqlParameter p in parametersList)
+                    com.Parameters.Add(p);
+
+                return com.ExecuteNonQuery();
+            }
+
+        }
 
 
 
