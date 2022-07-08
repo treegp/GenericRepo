@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 
@@ -129,15 +130,69 @@ namespace ConnectToDB
 
 
 
+        string SelectByPrimaryKeys(params int[] keys)
+        {
+            List<string> conditionList = new List<string>();
+
+            int i = 1;
+            foreach (var spec in ColumnsSpecifics)
+            {
+                if (!spec.PrimaryKey)
+                    continue;
+
+                conditionList.Add("[" + spec.ColumnName + "] = @param" + i);
+
+                i++;
+            }
+
+            string wherePart = "WHERE (" + string.Join(",", conditionList) + ")";
+            return wherePart;
+        }
+
+
+        //SELECT * FROM [dbo].[****] WHERE [Id]=1 , ....
+        public TEntity Find(params int[] keys)
+        {
+            List<SqlParameter> parametersList = new List<SqlParameter>();
+
+            int i = 1;
+            foreach (var key in keys)
+                parametersList.Add(new SqlParameter("param" + i, key));
+
+            string selectPart = "SELECT TOP(1) * FROM [" + tblSchema + "].[" + tblName + "]";
+            string wherePart = SelectByPrimaryKeys(keys);
+            string command = string.Join(" ", selectPart, wherePart);
+
+
+            using (SqlConnection con = new SqlConnection(conStr))
+            {
+                con.Open();
+                SqlCommand com = new SqlCommand(command, con);
+                foreach (SqlParameter p in parametersList)
+                    com.Parameters.Add(p);
+                SqlDataReader reader = com.ExecuteReader();
+
+                TEntity entity = Activator.CreateInstance<TEntity>();
+                if (reader.Read())
+                {
+                    foreach (var spec in ColumnsSpecifics)
+                    {
+                        spec.ColumnType.SetValue(entity, reader[reader.GetOrdinal(spec.ColumnName)]);
+                    }
+                }
+
+                return entity;
+
+
+            }
 
 
 
 
+
+        }
 
 
 
     }
-
-
-
 }
