@@ -90,7 +90,7 @@ namespace GenericRepo
             var i =products.Update(product);
 
             if (i != null)
-                MessageBox.Show("Found");
+                MessageBox.Show("Updated");
             else
                 MessageBox.Show("Entity not found");
         }
