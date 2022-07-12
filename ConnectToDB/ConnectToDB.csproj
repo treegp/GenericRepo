@@ -41,8 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attributes.cs" />
-    <Compile Include="ColumnSpecifics.cs" />
     <Compile Include="EntitiyModels\Corporations.cs" />
     <Compile Include="EntitiyModels\FinancialYears.cs" />
     <Compile Include="EntitiyModels\Inventories.cs" />
