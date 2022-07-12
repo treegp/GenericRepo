@@ -13,12 +13,13 @@ namespace GenericRepo
 
         private void InsertButton_Click(object sender, EventArgs e)
         {
-            var products = new ConnectToDB.GenericRepository<ConnectToDB.EntitiyModels.Products>("Data Source=.;Initial Catalog=ShopDb;Integrated Security=SSPI");
+            var items = new ConnectToDB.GenericRepository<ConnectToDB.EntityModels.Users>("Data Source=.;Initial Catalog=ShopDb;Integrated Security=SSPI");
 
-            var i = products.Insert(new ConnectToDB.EntitiyModels.Products
+            var i = items.Insert(new ConnectToDB.EntityModels.Users
             {
-                Title = "tst",
-                Price = 1000
+                UserName="client"
+                
+
             });
 
             if (i == 1)
@@ -29,9 +30,9 @@ namespace GenericRepo
 
         private void DeleteButton_Click(object sender, EventArgs e)
         {
-            var products = new ConnectToDB.GenericRepository<ConnectToDB.EntitiyModels.Products>("Data Source=.;Initial Catalog=ShopDb;Integrated Security=SSPI");
+            var products = new ConnectToDB.GenericRepository<ConnectToDB.EntityModels.Products>("Data Source=.;Initial Catalog=ShopDb;Integrated Security=SSPI");
 
-            var i = products.Delete(new ConnectToDB.EntitiyModels.Products
+            var i = products.Delete(new ConnectToDB.EntityModels.Products
             {
                 Id = 8
             });
@@ -44,31 +45,21 @@ namespace GenericRepo
 
         private void FindButton_Click(object sender, EventArgs e)
         {
-            var products = new ConnectToDB.GenericRepository<ConnectToDB.EntitiyModels.Products>("Data Source=.;Initial Catalog=ShopDb;Integrated Security=SSPI");
+            var products = new ConnectToDB.GenericRepository<ConnectToDB.EntityModels.Products>("Data Source=.;Initial Catalog=ShopDb;Integrated Security=SSPI");
 
             var i = products.Find(8);
-            
-            if (i != null)
-                MessageBox.Show("Found");
-            else
-                MessageBox.Show("Entity not found");
-        }
-
-        private void FindAllButton_Click(object sender, EventArgs e)
-        {
-            var products = new ConnectToDB.GenericRepository<ConnectToDB.EntitiyModels.Products>("Data Source=.;Initial Catalog=ShopDb;Integrated Security=SSPI");
-
-            var i = products.FindAll(1);
 
             if (i != null)
                 MessageBox.Show("Found");
             else
                 MessageBox.Show("Entity not found");
         }
+
+
 
         private void GetAllButton_Click(object sender, EventArgs e)
         {
-            var products = new ConnectToDB.GenericRepository<ConnectToDB.EntitiyModels.Products>("Data Source=.;Initial Catalog=ShopDb;Integrated Security=SSPI");
+            var products = new ConnectToDB.GenericRepository<ConnectToDB.EntityModels.Products>("Data Source=.;Initial Catalog=ShopDb;Integrated Security=SSPI");
 
             var i = products.GetAll();
 
@@ -80,19 +71,17 @@ namespace GenericRepo
 
         private void UpdateButton_Click(object sender, EventArgs e)
         {
-            var products = new ConnectToDB.GenericRepository<ConnectToDB.EntitiyModels.Products>("Data Source=.;Initial Catalog=ShopDb;Integrated Security=SSPI");
+            var products = new ConnectToDB.GenericRepository<ConnectToDB.EntityModels.Products>("Data Source=.;Initial Catalog=ShopDb;Integrated Security=SSPI");
 
             var product = products.Find(2);
 
             product.Title = "Headphone";
-            product.Price = 850000;
 
-            var i =products.Update(product);
 
-            if (i != null)
-                MessageBox.Show("Updated ");
-            else
-                MessageBox.Show("Entity not found");
+            var i = products.Update(product);
+
+            MessageBox.Show("Updated ");
+
         }
     }
 }
