@@ -43,8 +43,22 @@
   <ItemGroup>
     <Compile Include="Attributes.cs" />
     <Compile Include="ColumnSpecifics.cs" />
-    <Compile Include="EntitiyModels\Customers.cs" />
+    <Compile Include="EntitiyModels\Corporations.cs" />
+    <Compile Include="EntitiyModels\FinancialYears.cs" />
+    <Compile Include="EntitiyModels\Inventories.cs" />
+    <Compile Include="EntitiyModels\InventoryInsDetails.cs" />
+    <Compile Include="EntitiyModels\InventoryInsHeaders.cs" />
+    <Compile Include="EntitiyModels\InventoryInsType.cs" />
+    <Compile Include="EntitiyModels\InventoryOutsDetails.cs" />
+    <Compile Include="EntitiyModels\InventoryOutsHeaders.cs" />
+    <Compile Include="EntitiyModels\InventoryOutsType.cs" />
+    <Compile Include="EntitiyModels\ProductCategories.cs" />
+    <Compile Include="EntitiyModels\ProductParameters.cs" />
+    <Compile Include="EntitiyModels\ProductParameterValues.cs" />
+    <Compile Include="EntitiyModels\ProductPrices.cs" />
     <Compile Include="EntitiyModels\Products.cs" />
+    <Compile Include="EntitiyModels\ProductUnits.cs" />
+    <Compile Include="EntitiyModels\Users.cs" />
     <Compile Include="GenericRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

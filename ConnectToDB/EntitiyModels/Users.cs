@@ -2,25 +2,13 @@ using System;
 namespace ConnectToDB.EntityModels
 {
     [Table("dbo")]
-    public class Products
+    public class Users
     {
         [Column(true,true,true)]
         public int Id { get; set; }
 
         [Column(true,false,false)]
-        public int ProductCategoryId { get; set; }
-
-        [Column(false,false,false)]
-        public Nullable<int> ProductUnitId { get; set; }
-
-        [Column(true,false,false)]
-        public string Code { get; set; }
-
-        [Column(true,false,false)]
-        public string Title { get; set; }
-
-        [Column(false,false,false)]
-        public string Description { get; set; }
+        public string UserName { get; set; }
 
         [Column(true,false,false)]
         public bool IsDeleted { get; set; }

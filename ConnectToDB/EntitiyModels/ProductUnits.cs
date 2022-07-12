@@ -2,19 +2,10 @@ using System;
 namespace ConnectToDB.EntityModels
 {
     [Table("dbo")]
-    public class Products
+    public class ProductUnits
     {
         [Column(true,true,true)]
         public int Id { get; set; }
-
-        [Column(true,false,false)]
-        public int ProductCategoryId { get; set; }
-
-        [Column(false,false,false)]
-        public Nullable<int> ProductUnitId { get; set; }
-
-        [Column(true,false,false)]
-        public string Code { get; set; }
 
         [Column(true,false,false)]
         public string Title { get; set; }

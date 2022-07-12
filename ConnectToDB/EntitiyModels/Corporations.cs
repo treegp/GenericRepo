@@ -2,22 +2,22 @@ using System;
 namespace ConnectToDB.EntityModels
 {
     [Table("dbo")]
-    public class Products
+    public class Corporations
     {
         [Column(true,true,true)]
         public int Id { get; set; }
 
         [Column(true,false,false)]
-        public int ProductCategoryId { get; set; }
+        public string Title { get; set; }
 
         [Column(false,false,false)]
-        public Nullable<int> ProductUnitId { get; set; }
+        public string Address { get; set; }
 
-        [Column(true,false,false)]
-        public string Code { get; set; }
+        [Column(false,false,false)]
+        public string Telephone { get; set; }
 
-        [Column(true,false,false)]
-        public string Title { get; set; }
+        [Column(false,false,false)]
+        public string Fax { get; set; }
 
         [Column(false,false,false)]
         public string Description { get; set; }
