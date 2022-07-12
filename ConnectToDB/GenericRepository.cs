@@ -219,21 +219,13 @@ namespace ConnectToDB
             }
         }
 
-
         //SELECT * FROM [dbo].[****] WHERE [Id]=1 , ....
+
         public TEntity Find(params int[] keys)
         {
             string selectPart = "SELECT TOP(1) * FROM [" + tblSchema + "].[" + tblName + "]";
             return SelectByPrimaryKeys(selectPart, true, keys).FirstOrDefault();
         }
-
-
-        public List<TEntity> FindAll(params int[] keys)
-        {
-            string selectPart = "SELECT * FROM [" + tblSchema + "].[" + tblName + "]";
-            return SelectByPrimaryKeys(selectPart, true, keys);
-        }
-
 
         public List<TEntity> GetAll()
         {
@@ -245,6 +237,17 @@ namespace ConnectToDB
         {
             string selectPart = "SELECT TOP(1) * FROM [" + tblSchema + "].[" + tblName + "]";
             return SelectByPrimaryKeys(selectPart, false, 0);
+        }
+
+        public int Count()
+        {
+            string command = "SELECT COUNT(*) FROM [" + tblSchema + "].[" + tblName + "]";
+            using (SqlConnection con = new SqlConnection(conStr))
+            {
+                con.Open();
+                SqlCommand com = new SqlCommand(command, con);
+                return (int) com.ExecuteScalar();
+            }
         }
 
 
